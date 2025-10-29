@@ -53,9 +53,9 @@
 ### 6. Получение книги — не найдено (404)
 *Запрос несуществующего ID корректно возвращает статус `404 Not Found`.*
 
-<img width="800" alt="Get-Book-NotFound(GET)" src="https://github.com/user-attachments/assets/0144c6b6-9394-4da0-938c-c2b97fe6eb01" />
+<img width="800" alt="Get-Book-NotFound(GET)" src="https://github.com/user-attachments/assets/0ff4f849-54d8-481d-b0b8-bb31a2f4cfb7" />
 
 ### 7. Создание книги — некорректные данные (400)
 *Отправка книги без обязательного поля корректно возвращает статус `400 Bad Request`.*
 
-<img width="800" alt="Create-Book-Invalid(POST)" src="https://github.com/user-attachments/assets/116e91d3-9a61-4336-93b9-ade36fc81605" />
+<img width="800" alt="Create-Book-Invalid(POST)" src="https://github.com/user-attachments/assets/038ab07c-2ab9-4bde-84e7-8fbdf675a28e" />
