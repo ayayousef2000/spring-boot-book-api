@@ -1,12 +1,12 @@
 package com.example.books.service;
 
 import com.example.books.entity.Book;
+import com.example.books.exception.ResourceNotFoundException;
 import com.example.books.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
@@ -18,29 +18,31 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Optional<Book> getBookById(Long id) {
-        return bookRepository.findById(id);
+    public Book getBookById(Long id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Book", "id", id));
     }
 
     public Book createBook(Book book) {
         return bookRepository.save(book);
     }
 
-    public Optional<Book> updateBook(Long id, Book bookDetails) {
-        return bookRepository.findById(id).map(existingBook -> {
-            existingBook.setTitle(bookDetails.getTitle());
-            existingBook.setAuthor(bookDetails.getAuthor());
-            existingBook.setYear(bookDetails.getYear());
-            existingBook.setDescription(bookDetails.getDescription());
-            return bookRepository.save(existingBook);
-        });
+    public Book updateBook(Long id, Book bookDetails) {
+        Book existingBook = bookRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Book", "id", id));
+
+        existingBook.setTitle(bookDetails.getTitle());
+        existingBook.setAuthor(bookDetails.getAuthor());
+        existingBook.setYear(bookDetails.getYear());
+        existingBook.setDescription(bookDetails.getDescription());
+
+        return bookRepository.save(existingBook);
     }
 
-    public boolean deleteBook(Long id) {
-        if (bookRepository.existsById(id)) {
-            bookRepository.deleteById(id);
-            return true;
+    public void deleteBook(Long id) {
+        if (!bookRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Book", "id", id);
         }
-        return false;
+        bookRepository.deleteById(id);
     }
 }
